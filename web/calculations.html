@@ -1,0 +1,392 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kardhani Design Calculations</title>
+<style>
+/* Layout: a field notebook. Sticky contents rail on the left, one reading column, formula cards and quiz cards inline. */
+:root {
+  --paper: #FBF7EE; --paper-2: #F3EDDF; --card: #FFFFFF; --ink: #22304A; --ink-2: #5B6478; --rule: #E2DACA;
+  --pink: #D24F6E; --pink-soft: #FBE1E7; --wet: #23905C; --wet-soft: #DDF2E6; --dry: #2569C2; --dry-soft: #DCE9FA;
+  --haz: #D23B3B; --haz-soft: #FADCDC; --gold: #C98A12; --gold-soft: #FDF0D3; --lav-soft: #ECE8FC;
+  --hand: "Segoe Print", "Ink Free", "Comic Sans MS", cursive;
+  --note: "Ink Free", "Segoe Print", cursive;
+  --body: "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+  --mono: "Cascadia Mono", Consolas, "Courier New", monospace;
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body {
+  margin: 0; background: var(--paper); color: var(--ink); font: 16.5px/1.65 var(--body);
+  background-image: linear-gradient(var(--rule) 1px, transparent 1px), linear-gradient(90deg, var(--rule) 1px, transparent 1px);
+  background-size: 32px 32px; background-attachment: fixed;
+}
+.wrap { display: grid; grid-template-columns: 250px minmax(0, 1fr); gap: 40px; max-width: 1240px; margin: 0 auto;
+  padding-block: 32px 80px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+nav.toc { position: sticky; top: 20px; align-self: start; max-height: calc(100vh - 40px); overflow: auto; background: var(--card);
+  border: 1.5px solid var(--ink); border-radius: 10px 14px 9px 13px; padding: 16px 16px 12px; box-shadow: 4px 4px 0 var(--rule); }
+nav.toc h2 { font: 700 1.1rem var(--hand); margin: 0 0 8px; }
+nav.toc ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; }
+nav.toc a { color: var(--ink-2); text-decoration: none; font-size: .9rem; display: block; padding: 3px 6px; border-radius: 6px; }
+nav.toc a:hover, nav.toc a:focus-visible { background: var(--pink-soft); color: var(--ink); }
+nav.toc .part { font: 700 .72rem var(--body); letter-spacing: .08em; text-transform: uppercase; color: var(--pink); margin-top: 10px; padding-left: 6px; }
+.theme-btn { margin-top: 12px; width: 100%; font: 600 .85rem var(--body); padding: 7px; border-radius: 8px; border: 1.5px solid var(--ink);
+  background: var(--paper); color: var(--ink); cursor: pointer; }
+main { min-width: 0; max-width: 820px; }
+header.hero { padding: 8px 0 18px; }
+.eyebrow { font: 700 .78rem var(--body); letter-spacing: .1em; text-transform: uppercase; color: var(--ink-2); }
+h1 { font: 700 clamp(2rem, 5vw, 3.1rem)/1.15 var(--hand); margin: 6px 0 10px; text-wrap: balance; }
+h1 em { font-style: normal; color: var(--pink); }
+.lede { font-size: 1.1rem; color: var(--ink-2); max-width: 64ch; }
+section { padding-top: 26px; }
+h2 { font: 700 1.75rem/1.25 var(--hand); margin: 34px 0 6px; text-wrap: balance; }
+h2 .tag { font: 700 .72rem var(--body); letter-spacing: .08em; text-transform: uppercase; color: #fff; background: var(--pink);
+  padding: 3px 8px; border-radius: 4px; vertical-align: middle; margin-right: 8px; }
+h3 { font: 700 1.2rem/1.3 var(--body); margin: 26px 0 6px; }
+p, li { max-width: 68ch; }
+a { color: var(--dry); }
+.underline { background: linear-gradient(transparent 62%, var(--gold-soft) 62%); padding: 0 2px; }
+.desi { background: var(--gold-soft); border: 1.5px dashed var(--gold); border-radius: 10px; padding: 10px 14px; margin: 14px 0; font-size: .97rem; }
+.desi p, .desi ul, .desi ol { margin: 6px 0; }
+.desi li { margin: 3px 0; }
+.desi > b:first-child { font: 700 .95rem var(--note); color: var(--gold); display: block; }
+.say { background: var(--wet-soft); border-left: 5px solid var(--wet); border-radius: 4px 10px 10px 4px; padding: 10px 14px; margin: 14px 0; }
+.say > b:first-child { font: 700 .8rem var(--body); letter-spacing: .06em; text-transform: uppercase; color: var(--wet); display: block; }
+.warn { background: var(--haz-soft); border-left: 5px solid var(--haz); border-radius: 4px 10px 10px 4px; padding: 10px 14px; margin: 14px 0; }
+.warn > b:first-child { font: 700 .8rem var(--body); letter-spacing: .06em; text-transform: uppercase; color: var(--haz); display: block; }
+.calc { background: var(--card); border: 1.5px solid var(--ink); border-radius: 12px 8px 14px 9px; padding: 14px 16px; margin: 16px 0;
+  box-shadow: 3px 3px 0 var(--rule); overflow-x: auto; }
+.calc h4 { margin: 0 0 8px; font: 700 1rem var(--hand); color: var(--pink); }
+.calc .row { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px 18px; padding: 4px 0; border-bottom: 1px dotted var(--rule); }
+.calc .row:last-child { border-bottom: 0; }
+.calc code, code { font-family: var(--mono); font-size: .9em; background: var(--paper-2); padding: 1px 5px; border-radius: 4px; }
+.calc .res { font: 700 1rem var(--mono); white-space: nowrap; text-align: right; }
+.calc .final { color: var(--wet); }
+.grid { display: grid; gap: 12px; }
+.g2 { grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); }
+.g3 { grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); }
+.term { background: var(--card); border: 1px solid var(--rule); border-radius: 10px; padding: 10px 12px; min-width: 0; }
+.term b { display: block; font-size: .98rem; }
+.term span { color: var(--ink-2); font-size: .92rem; }
+.stat { background: var(--card); border-radius: 10px; padding: 10px 12px; border: 1.5px solid var(--rule); }
+.stat .n { font: 700 1.5rem/1.2 var(--hand); color: var(--ink); font-variant-numeric: tabular-nums; }
+.stat .l { font-size: .85rem; color: var(--ink-2); }
+.chain { display: grid; grid-template-columns: repeat(auto-fit, minmax(118px, 1fr)); gap: 10px; margin: 14px 0; counter-reset: el; }
+.chain div { counter-increment: el; background: var(--card); border: 1.5px solid var(--ink); border-radius: 10px; padding: 10px; position: relative; font-size: .88rem; }
+.chain div::before { content: counter(el); font: 700 1.3rem var(--hand); color: var(--pink); display: block; line-height: 1; }
+.chain div b { display: block; font-size: .95rem; margin: 2px 0; }
+table { border-collapse: collapse; width: 100%; font-size: .93rem; }
+.tbl { overflow-x: auto; margin: 14px 0; background: var(--card); border: 1.5px solid var(--ink); border-radius: 10px; }
+th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+th { font-size: .78rem; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-2); background: var(--paper-2); }
+td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+tr:last-child td { border-bottom: 0; }
+figure { margin: 16px 0; }
+figure img { display: block; max-width: 100%; height: auto; border-radius: 8px; border: 1.5px solid var(--rule); background: #fff; }
+figcaption { font-size: .85rem; color: var(--ink-2); margin-top: 6px; }
+.svgbox { overflow-x: auto; background: var(--card); border: 1.5px solid var(--ink); border-radius: 12px; padding: 10px; margin: 16px 0; }
+.svgbox svg { display: block; min-width: 620px; width: 100%; height: auto; }
+.svgbox.small svg { min-width: 360px; max-width: 520px; margin: 0 auto; }
+svg text { font-family: var(--body); fill: var(--ink); }
+svg .hand { font-family: var(--hand); }
+svg .muted { fill: var(--ink-2); }
+svg .ln { stroke: var(--ink); fill: none; }
+svg .card { fill: var(--card); stroke: var(--ink); stroke-width: 1.5; }
+svg .wetf { fill: var(--wet-soft); stroke: var(--wet); stroke-width: 1.5; }
+svg .dryf { fill: var(--dry-soft); stroke: var(--dry); stroke-width: 1.5; }
+svg .hazf { fill: var(--haz-soft); stroke: var(--haz); stroke-width: 1.5; }
+svg .goldf { fill: var(--gold-soft); stroke: var(--gold); stroke-width: 1.5; }
+svg .pinkf { fill: var(--pink-soft); stroke: var(--pink); stroke-width: 1.5; }
+svg .lavf { fill: var(--lav-soft); stroke: var(--ink-2); stroke-width: 1.5; }
+svg .arrow { stroke: var(--ink-2); stroke-width: 2; fill: none; marker-end: url(#ah); }
+svg .arrowres { stroke: var(--gold); stroke-width: 3; fill: none; marker-end: url(#ahg); }
+/* quiz */
+.qtools { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0 6px; align-items: center; }
+.qtools button { font: 600 .85rem var(--body); padding: 6px 12px; border-radius: 999px; border: 1.5px solid var(--ink); background: var(--card); color: var(--ink); cursor: pointer; }
+.qtools button[aria-pressed="true"] { background: var(--ink); color: var(--paper); }
+.qtools .count { font-size: .85rem; color: var(--ink-2); margin-left: auto; }
+details.q { background: var(--card); border: 1.5px solid var(--rule); border-radius: 10px; margin: 8px 0; padding: 0 14px; }
+details.q[open] { border-color: var(--ink); }
+details.q summary { cursor: pointer; padding: 11px 0; font-weight: 600; list-style: none; display: flex; gap: 10px; align-items: baseline; }
+details.q summary::-webkit-details-marker { display: none; }
+details.q summary::before { content: "Q"; font: 700 .9rem var(--hand); color: var(--pink); flex: none; }
+details.q .a { padding: 0 0 12px; border-top: 1px dashed var(--rule); padding-top: 8px; }
+details.q .a p { margin: 6px 0; }
+details.q .lvl { font: 700 .68rem var(--body); letter-spacing: .06em; text-transform: uppercase; padding: 2px 6px; border-radius: 4px; flex: none; margin-left: auto; }
+.lvl.easy { background: var(--wet-soft); color: var(--wet); } .lvl.med { background: var(--gold-soft); color: var(--gold); } .lvl.hard { background: var(--haz-soft); color: var(--haz); }
+details.q.known { opacity: .55; }
+.knowbtn { font: 600 .78rem var(--body); border: 1px solid var(--rule); background: var(--paper); color: var(--ink-2); border-radius: 6px; padding: 3px 8px; cursor: pointer; }
+.flash { background: var(--pink-soft); border: 2px solid var(--pink); border-radius: 12px; padding: 14px 16px; margin: 12px 0; }
+.flash[hidden] { display: none !important; }
+.cheat { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; }
+.cheat div { background: var(--card); border: 1.5px solid var(--ink); border-radius: 10px; padding: 8px 10px; }
+.cheat .n { font: 700 1.3rem var(--hand); display: block; font-variant-numeric: tabular-nums; }
+.cheat .l { font-size: .8rem; color: var(--ink-2); }
+footer { margin-top: 50px; font-size: .85rem; color: var(--ink-2); }
+:focus-visible { outline: 3px solid var(--dry); outline-offset: 2px; }
+@media (max-width: 900px) {
+  .wrap { grid-template-columns: minmax(0, 1fr); gap: 16px; }
+  nav.toc { position: static; max-height: none; }
+  nav.toc ol { grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); }
+}
+</style>
+<style>.term span b { display: inline; }</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="toc" aria-label="Contents">
+  <h2>Calculations</h2>
+  <ol>
+    <li><a href="#summary">0 · All results</a></li>
+    <li><a href="#gen">1 · Waste generated</a></li>
+    <li><a href="#bins">2 · Bin sizes</a></li>
+    <li><a href="#fleet">3 · Number of hoppers</a></li>
+    <li><a href="#routes">4 · Routes</a></li>
+    <li><a href="#wrc">5 · Compost shed & C/N</a></li>
+    <li><a href="#transport">6 · Transport</a></li>
+    <li><a href="#fate">7 · Diversion</a></li>
+    <li><a href="#cost">8 · Cost & payback</a></li>
+    <li><a href="#notes">9 · Assumptions &amp; notes</a></li>
+  </ol>
+</nav>
+<main>
+<header class="hero">
+  <div class="eyebrow">SWM course project · IIT Jammu · Harsh Agarwal (2024UCE0050) · Kardhani, Ward 44, Jaipur</div>
+  <h1>Design <em>calculations</em></h1>
+  <p class="lede">Every number in my proposed system, worked out step by step.</p>
+</header>
+
+<section id="summary">
+  <h2><span class="tag">0</span>All results at a glance</h2>
+  <div class="tbl"><table>
+    <thead><tr><th>#</th><th>Calculation</th><th>Method</th><th class="num">Result</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td><a href="#gen">Waste generated</a></td><td>16,565 people × 0.45 kg × 1.2</td><td class="num"><b>8.9 t/day</b></td></tr>
+      <tr><td>2</td><td><a href="#bins">Bin sizes</a></td><td>V = m / ρ × safety factor</td><td class="num"><b>10 + 15 + 5 L</b></td></tr>
+      <tr><td>3</td><td><a href="#fleet">Number of hoppers</a></td><td>N = SF / XW = 3,613 / 855</td><td class="num"><b>4.2 → 5 + 1</b></td></tr>
+      <tr><td>4</td><td><a href="#routes">Route efficiency</a></td><td>31.7 km ÷ (31.7 + 12.4) km</td><td class="num"><b>72 %</b></td></tr>
+      <tr><td>5</td><td><a href="#wrc">Compost shed</a></td><td>3.58 t/d ÷ 1.5 t/m × 45 days</td><td class="num"><b>107 m · 0.1 ha</b></td></tr>
+      <tr><td>5</td><td><a href="#wrc">C/N mix</a></td><td>(15 + 50x)/(1 + x) = 25</td><td class="num"><b>x = 0.4</b></td></tr>
+      <tr><td>6</td><td><a href="#transport">Transport</a></td><td>6.7 t × 21 km → 2.6 t × 21 km</td><td class="num"><b>141 → 56 t-km</b></td></tr>
+      <tr><td>7</td><td><a href="#fate">Diversion</a></td><td>(3.58 + 1.38 + 1.34) / 8.95</td><td class="num"><b>8 % → 70 %</b></td></tr>
+      <tr><td>8</td><td><a href="#cost">Payback</a></td><td>₹89.1 lakh ÷ ₹45.5 lakh/yr</td><td class="num"><b>~2 years</b></td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section id="gen">
+  <h2><span class="tag">1</span>How much waste?</h2>
+  <p>Nobody weighs Kardhani's waste, so I estimated it the way the CPHEEO manual does: <b>people × waste per person</b>, plus a share for shops and streets.</p>
+  <div class="calc"><h4>Waste generated today (2026)</h4>
+    <div class="row"><span>Population grown 2 years at 2.8 %: <code>15,675 × 1.028²</code></span><span class="res">16,565 people</span></div>
+    <div class="row"><span>Household waste: <code>16,565 × 0.45 kg</code></span><span class="res">7.45 t/day</span></div>
+    <div class="row"><span>Shops, market, schools, sweeping: +20 %</span><span class="res">1.49 t/day</span></div>
+    <div class="row"><span><b>Total</b></span><span class="res final">≈ 8.9 t/day</span></div>
+    <div class="row"><span>Check: Jaipur 1,700 t ÷ 3.9 million people</span><span class="res">0.44 kg/person</span></div>
+  </div>
+  <p><b>Composition</b> (Prajapati et al. 2021 for Jaipur, and the CPHEEO manual): wet/biodegradable <b>50 %</b> (4.47 t), inert dust and sweepings <b>25 %</b> (2.24 t), plastic 9 %, paper 8 %, metal 4 %, textile/other 3 %, glass 1 %.</p>
+  <p><b>Forecast:</b> with population +2.8 %/yr and waste per person +1.33 %/yr (CPHEEO), Kardhani will make <b>16.5 t/day by 2041</b>, almost double. My Ward Resource Centre site is sized with room for that.</p>
+</section>
+<section id="bins">
+  <h2><span class="tag">2</span>Calculation 2: sizing the bins (four streams)</h2>
+  <p>A bin must hold the waste between two pickups, with spare room. Volume = mass ÷ density × safety factor.</p>
+  <div class="calc"><h4>Typical home: 5 people × 0.45 kg = 2.25 kg/day</h4>
+    <div class="row"><span>Wet = half = 1.125 kg/day, emptied <b>daily</b>, density ≈ 300 kg/m³, ×2 spare: <code>1.125/300 × 2</code></span><span class="res">7.5 L → <span class="final">10 L green</span></span></div>
+    <div class="row"><span>Dry ≈ 0.56 kg/day, emptied every <b>2 days</b>, density ≈ 100 kg/m³, ×1.25 spare: <code>0.56×2/100 × 1.25</code></span><span class="res">14 L → <span class="final">15 L blue</span></span></div>
+    <div class="row"><span>Sanitary (wrapped) and special care (small box, collected separately), as the SWM Rules 2026 require</span><span class="res">+ 2 small</span></div>
+  </div>
+</section>
+<section id="fleet">
+  <h2><span class="tag">3</span>How many hoppers? <code>N = SF / XW</code></h2>
+  <p>This is the fleet equation from Worrell &amp; Vesilind.</p>
+  <div class="grid g2">
+    <div class="term"><b>N</b><span>number of vehicles needed</span></div>
+    <div class="term"><b>S</b><span>customers served = 3,313 houses + ≈300 shops = <b>3,613</b></span></div>
+    <div class="term"><b>F</b><span>pickups per customer per week = 7 (daily)</span></div>
+    <div class="term"><b>X</b><span>customers one vehicle serves per day = <b>855</b> (worked out below)</span></div>
+    <div class="term"><b>W</b><span>working days per week = 7</span></div>
+  </div>
+  <div class="calc"><h4>Step by step</h4>
+    <div class="row"><span>Vehicle: wet box 1.2 m³ × 400 kg/m³ (compacted in vehicle)</span><span class="res">480 kg</span></div>
+    <div class="row"><span>Dry box 1.8 m³ × 130 kg/m³</span><span class="res">234 kg</span></div>
+    <div class="row"><span>Waste per customer: wet 0.99, dry 0.87 kg/day → the dry box fills first: <code>234 / 0.87</code></span><span class="res">270 customers/load</span></div>
+    <div class="row"><span>Pickup rate 3 customers/min → time to fill one load <code>b = 270/3</code></span><span class="res">90 min</span></div>
+    <div class="row"><span>Trip to the ward centre and back, <code>d</code></span><span class="res">30 min</span></div>
+    <div class="row"><span>Working day <code>Y = a + c(b+d) + e + f + g</code>: <code>480 = 20 + c(120) + 20 + 30 + 30</code><br><small class="muted">a = start-up, e = finish, f = breaks, g = off-route time</small></span><span class="res">c = 3.17 loads/day</span></div>
+    <div class="row"><span>Customers per hopper per day <code>X = 3.17 × 270</code></span><span class="res">855</span></div>
+    <div class="row"><span><code>N = (3,613 × 7) / (855 × 7)</code></span><span class="res final">4.2 → 5 + 1 spare = 6</span></div>
+  </div>
+
+
+</section>
+<section id="routes">
+  <h2><span class="tag">4</span>Routes on the real street map</h2>
+  <p>I downloaded Kardhani's street network from <b>OpenStreetMap</b> using the Python library <b>OSMnx</b>. To a computer a street map is a <b>graph</b>: junctions are <b>nodes</b> (399) and street segments are <b>edges</b> (557), each with a length. Total street length = <b>31.7 km</b>.</p>
+  <h3>Step 1: split the streets into 5 balanced beats</h3>
+  <p>I used a <b>balanced network-Voronoi</b> partition:</p>
+  <ol>
+    <li>Place 5 seed junctions spread around the ward (on a 380 m ring).</li>
+    <li>Give every street segment to the seed that is nearest <b>by road distance</b> (shortest path along streets, Dijkstra's algorithm), not by straight-line distance.</li>
+    <li>If one beat has too much street, add a small "penalty" to its seed so it gives up border streets; repeat until the largest beat is within 6 % of the average.</li>
+    <li>Move each seed to the centre of its beat (the network medoid) and repeat.</li>
+  </ol>
+  <p>Result: 5 beats of <b>5.8, 6.1, 6.5, 6.6 and 6.7 km</b> of street. Because assignment is by road distance, every beat is one connected patch with no overlap, which is Worrell's first routing rule.</p>
+  <figure><img src="assets/fig_map_proposed.png" alt="Map of Kardhani with five coloured collection beats, the Ward Resource Centre star and litter bins" loading="lazy" style="max-width:520px">
+    <figcaption>My five beats (B1–B5), the Ward Resource Centre near Kardhani Central Park (star), and litter bins on the main road. Map data © OpenStreetMap contributors.</figcaption></figure>
+  <h3>Step 2: the Chinese postman problem</h3>
+  <p>A collection vehicle must drive <b>every street</b> (like a postman), not just visit points. Euler's rule: you can drive every street exactly once and come back only if every junction has an <b>even</b> number of streets. Junctions with an odd number (dead ends, T-junctions) force you to repeat some streets. The fix is to <b>pair up the odd junctions</b> and repeat the shortest paths between each pair. That repeated driving is called <b>deadhead</b>.</p>
+  <div class="svgbox small">
+    <svg viewBox="0 0 520 250" role="img" aria-label="Small example: a square with one diagonal has two odd junctions, so the diagonal is driven twice">
+      <g stroke="var(--ink)" stroke-width="3"><line x1="80" y1="40" x2="240" y2="40"/><line x1="240" y1="40" x2="240" y2="200"/><line x1="240" y1="200" x2="80" y2="200"/><line x1="80" y1="200" x2="80" y2="40"/></g>
+      <line x1="80" y1="40" x2="240" y2="200" stroke="var(--pink)" stroke-width="3"/>
+      <line x1="86" y1="34" x2="246" y2="194" stroke="var(--pink)" stroke-width="3" stroke-dasharray="6 5"/>
+      <g><circle cx="80" cy="40" r="13" fill="var(--pink)"/><circle cx="240" cy="200" r="13" fill="var(--pink)"/><circle cx="240" cy="40" r="11" fill="var(--card)" stroke="var(--ink)" stroke-width="2"/><circle cx="80" cy="200" r="11" fill="var(--card)" stroke="var(--ink)" stroke-width="2"/></g>
+      <g font-size="13" font-weight="700"><text x="54" y="30">A·3</text><text x="250" y="30">B·2</text><text x="250" y="222">C·3</text><text x="44" y="222">D·2</text></g>
+      <g font-size="13"><text x="290" y="60">Each number = streets at that junction.</text><text x="290" y="85">A and C are <tspan font-weight="700" fill="var(--pink)">odd</tspan> (3).</text><text x="290" y="110">Pair them: drive the diagonal</text><text x="290" y="128">A–C twice (dashed).</text><text x="290" y="160">Kardhani: 318 odd junctions,</text><text x="290" y="178">pairing adds 12.4 km.</text></g>
+    </svg>
+  </div>
+
+  <h3>Chinese postman on a small graph</h3>
+  <p>A route that drives every street exactly once and returns to the start exists only when every junction has an even number of streets (an Eulerian graph). Example with street lengths:</p>
+  <div class="svgbox small">
+    <svg viewBox="0 0 560 300" role="img" aria-label="Six-junction example graph A to F with street lengths; B and E are odd; path B-A-F-E is repeated">
+      <g stroke="var(--ink)" stroke-width="2.5">
+        <line x1="40" y1="150" x2="130" y2="40"/><line x1="40" y1="150" x2="130" y2="260"/><line x1="130" y1="40" x2="130" y2="260"/>
+        <line x1="130" y1="40" x2="390" y2="50"/><line x1="130" y1="260" x2="390" y2="50"/><line x1="390" y1="50" x2="390" y2="260"/>
+        <line x1="390" y1="50" x2="470" y2="150"/><line x1="470" y1="150" x2="390" y2="260"/><line x1="130" y1="260" x2="390" y2="260"/>
+      </g>
+      <g stroke="var(--gold)" stroke-width="3.5" stroke-dasharray="7 5" fill="none">
+        <line x1="32" y1="141" x2="122" y2="31"/><line x1="32" y1="159" x2="122" y2="269"/><line x1="130" y1="272" x2="390" y2="272"/>
+      </g>
+      <g font-size="15" font-weight="700" class="muted">
+        <text x="70" y="88">3</text><text x="70" y="222">4</text><text x="138" y="155">8</text><text x="255" y="38">5</text>
+        <text x="265" y="160">14</text><text x="398" y="160">10</text><text x="438" y="92">5</text><text x="438" y="218">9</text><text x="255" y="252">6</text>
+      </g>
+      <g font-size="15" font-weight="700" text-anchor="middle">
+        <circle cx="40" cy="150" r="17" class="card"/><text x="40" y="155">A</text>
+        <circle cx="130" cy="40" r="17" class="pinkf"/><text x="130" y="45">B</text>
+        <circle cx="130" cy="260" r="17" class="card"/><text x="130" y="265">F</text>
+        <circle cx="390" cy="50" r="17" class="card"/><text x="390" y="55">C</text>
+        <circle cx="470" cy="150" r="17" class="card"/><text x="470" y="155">D</text>
+        <circle cx="390" cy="260" r="17" class="pinkf"/><text x="390" y="265">E</text>
+      </g>
+      <g font-size="12" class="muted"><text x="100" y="20">deg 3</text><text x="405" y="292">deg 3</text></g>
+    </svg>
+  </div>
+  <div class="calc"><h4>Make it Eulerian</h4>
+    <div class="row"><span>Degrees: A 2, B <b>3</b>, C 4, D 2, E <b>3</b>, F 4 → odd junctions</span><span class="res">B, E</span></div>
+    <div class="row"><span>B–C–E = 5 + 10 · B–F–E = 8 + 6 · B–C–D–E = 5 + 5 + 9</span><span class="res">15 · 14 · 19</span></div>
+    <div class="row"><span>B–A–F–E = 3 + 4 + 6 (shortest) → repeat these three streets</span><span class="res final">13</span></div>
+    <div class="row"><span>All streets 3+4+8+5+14+10+5+9+6</span><span class="res">64</span></div>
+    <div class="row"><span>Shortest closed route = 64 + 13: A–B–A–F–B–C–F–E–C–D–E–F–A</span><span class="res final">77</span></div>
+  </div>
+  <p>Kardhani is the same problem at full size: 318 odd junctions, paired by shortest road paths.</p>
+  <figure><img src="assets/routes.gif" alt="Animation on Kardhani's street graph: Dijkstra assignment from 5 seeds, beat balancing, then odd junctions and repeated streets" loading="lazy">
+    <figcaption>The route algorithm running on Kardhani's real street graph (399 junctions, 31.7 km): Dijkstra assignment, beat balancing, Chinese postman pairing. Reload the page to replay.</figcaption></figure>
+  <div class="calc"><h4>Route efficiency</h4>
+    <div class="row"><span>Streets that must be served</span><span class="res">31.7 km</span></div>
+    <div class="row"><span>Deadhead from pairing the 318 odd junctions</span><span class="res">12.4 km</span></div>
+    <div class="row"><span>Total driving <code>31.7 + 12.4</code></span><span class="res">44.1 km</span></div>
+    <div class="row"><span>Efficiency <code>31.7 / 44.1</code></span><span class="res final">72 %</span></div>
+  </div>
+
+</section>
+<section id="wrc">
+  <h2><span class="tag">5</span>The compost shed</h2>
+  <p>Wet waste is composted in <b>windrows under a roof</b>: long piles, turned regularly so air reaches the microbes (aerobic, so no bad smell).</p>
+  <div class="calc"><h4>Sizing the windrows</h4>
+    <div class="row"><span>Wet waste sent to compost: <code>0.80 × 4.47</code> (20 % rejected as unsuitable)</span><span class="res">3.58 t/day</span></div>
+    <div class="row"><span>Windrow cross-section: trapezoid, base 3.0 m, top 1.0 m, height 1.5 m: <code>(3+1)/2 × 1.5</code></span><span class="res">3.0 m²</span></div>
+    <div class="row"><span>At 500 kg/m³, each metre of windrow holds <code>3.0 × 0.5</code></span><span class="res">1.5 t/m</span></div>
+    <div class="row"><span>New windrow needed each day <code>3.58 / 1.5</code></span><span class="res">2.4 m/day</span></div>
+    <div class="row"><span>Time in shed: 30 days composting + 15 days curing <code>2.4 × 45</code></span><span class="res">107 m</span></div>
+    <div class="row"><span>Layout: 4 rows × 27 m, 5 m apart</span><span class="res">≈ 660 m²</span></div>
+    <div class="row"><span>+60 % for unloading, sieving, storage</span><span class="res final">≈ 1,050 m² (0.1 ha)</span></div>
+    <div class="row"><span>Compost out ≈ 30 % of input <code>0.30 × 3.58</code></span><span class="res final">1.07 t/day ≈ 390 t/yr</span></div>
+  </div>
+  <div class="calc"><h4>C/N ratio: why I add dry leaves</h4>
+    <div class="row"><span>Food waste C/N ≈ 15 (too much nitrogen → ammonia smell). Target ≈ 25. Dry leaves C/N ≈ 50.</span><span class="res"></span></div>
+    <div class="row"><span>Mix x kg leaves per kg food: <code>(15 + 50x)/(1 + x) = 25</code> → <code>15 + 50x = 25 + 25x</code></span><span class="res final">x = 0.4</span></div>
+    <div class="row"><span>Leaves needed <code>0.4 × 3.58</code>: from park leaves + sawdust from Kalwar Road furniture shops</span><span class="res">≈ 1.4 t/day</span></div>
+  </div>
+  <p>Next to the shed, a <b>Dry Waste Collection Centre</b> (≈ 290 m², baler + weighing scale) sorts <b>1.4 t/day</b> of recyclables. It is run by a registered co-op of the same kabadiwalas and waste pickers who do this work today, so they get fixed wages and safety gear instead of losing their livelihood.</p>
+</section>
+<section id="transport">
+  <h2><span class="tag">6</span>Transport and disposal</h2>
+  <div class="calc"><h4>Tonne-km saved</h4>
+    <div class="row"><span>Today: everything collected goes to Sewapura <code>6.7 t × 21 km</code></span><span class="res">141 t-km/day</span></div>
+    <div class="row"><span>Mine: only residual 1.8 + rejects 0.9 <code>2.6 t × 21 km</code></span><span class="res">56 t-km/day</span></div>
+    <div class="row"><span>Waste leaving the ward <code>(6.7 − 2.6) / 6.7</code></span><span class="res final">−61 %</span></div>
+  </div>
+  <p>Hoppers unload straight at the Ward Resource Centre, so the open roadside points and empty-plot dumps can be closed. One covered truck a day takes the residue. Once wet waste is removed, the dry residue is a <b>much better fuel</b> for the RDF/WtE plant, and only ≈ 0.9 t/day of inert rejects needs a <b>lined</b> landfill cell. At city level, the 20.3 lakh t of legacy waste can be cleared by <b>biomining</b>.</p>
+</section>
+<section id="fate">
+  <h2><span class="tag">7</span>Where the 8.9 t/day goes: 8 % → 70 %</h2>
+  <div class="svgbox">
+    <svg viewBox="0 0 760 210" role="img" aria-label="Stacked bars. Existing: composted 0.3, recycled 0.45, RDF 3.95, dumped 2.47, uncollected 1.79 tonnes per day. Proposed: composted 3.58, recycled 1.38, inert reused 1.34, RDF 1.75, dumped 0.89.">
+      <g font-size="13">
+        <text x="90" y="52" text-anchor="end" font-weight="700">Today</text>
+        <text x="90" y="122" text-anchor="end" font-weight="700">My design</text>
+      </g>
+      <!-- scale: 8.95 t -> 640 px => 71.5 px per t -->
+      <g transform="translate(100,30)">
+        <rect x="0" y="0" width="21.4" height="34" fill="var(--wet)"/><rect x="21.4" y="0" width="32.2" height="34" fill="var(--dry)"/>
+        <rect x="53.6" y="0" width="282.4" height="34" fill="var(--gold)"/><rect x="336" y="0" width="176.6" height="34" fill="var(--ink-2)"/><rect x="512.6" y="0" width="128" height="34" fill="var(--haz)"/>
+        <text x="650" y="22" font-size="13" font-weight="700">8 %</text>
+        <rect x="0" y="70" width="256" height="34" fill="var(--wet)"/><rect x="256" y="70" width="98.5" height="34" fill="var(--dry)"/><rect x="354.5" y="70" width="95.9" height="34" fill="var(--lav-soft)" stroke="var(--ink-2)"/>
+        <rect x="450.4" y="70" width="125.4" height="34" fill="var(--gold)"/><rect x="575.8" y="70" width="64" height="34" fill="var(--ink-2)"/>
+        <text x="650" y="92" font-size="13" font-weight="700" fill="var(--wet)">70 %</text>
+      </g>
+      <g font-size="12" transform="translate(100,160)">
+        <rect x="0" y="0" width="12" height="12" fill="var(--wet)"/><text x="17" y="11">Composted</text>
+        <rect x="100" y="0" width="12" height="12" fill="var(--dry)"/><text x="117" y="11">Recycled</text>
+        <rect x="190" y="0" width="12" height="12" fill="var(--lav-soft)" stroke="var(--ink-2)"/><text x="207" y="11">Inert reused</text>
+        <rect x="300" y="0" width="12" height="12" fill="var(--gold)"/><text x="317" y="11">RDF / WtE</text>
+        <rect x="400" y="0" width="12" height="12" fill="var(--ink-2)"/><text x="417" y="11">Dumped / landfilled</text>
+        <rect x="550" y="0" width="12" height="12" fill="var(--haz)"/><text x="567" y="11">Uncollected</text>
+      </g>
+    </svg>
+  </div>
+  <p><b>Diversion</b> = composted + recycled + reused, divided by total. Today: (0.30 + 0.45) / 8.95 = <b>8 %</b>. Mine: (3.58 + 1.38 + 1.34) / 8.95 = <b>70 %</b>. Today's split is based on the city's plant capacities (NGT order); it is an estimate, not a measurement.</p>
+
+</section>
+<section id="cost">
+  <h2><span class="tag">8</span>Cost and payback (₹ lakh, 2026 prices, indicative)</h2>
+  <div class="tbl"><table>
+    <thead><tr><th>One-time cost</th><th class="num">₹ L</th><th>Yearly benefit / cost</th><th class="num">₹ L/yr</th></tr></thead>
+    <tbody>
+      <tr><td>6 twin-compartment e-hoppers (× 4.5)</td><td class="num">27.0</td><td>Compost 390 t × ₹3,000/t</td><td class="num">11.8</td></tr>
+      <tr><td>Bin sets (wet + dry + small boxes), 3,313 houses × ₹250</td><td class="num">8.3</td><td>Govt. Market Development Assistance ₹1,500/t</td><td class="num">5.9</td></tr>
+      <tr><td>Compost shed 0.1 ha (shredder, sieve)</td><td class="num">30.0</td><td>Recyclables 503 t × ₹8/kg</td><td class="num">40.2</td></tr>
+      <tr><td>Dry waste centre (baler, scale)</td><td class="num">15.0</td><td>Less transport 85 t-km/day × ₹12</td><td class="num">3.7</td></tr>
+      <tr><td>Litter bins + drain screens</td><td class="num">2.8</td><td>User charge ₹50/house/month, 80 % pay</td><td class="num">15.9</td></tr>
+      <tr><td>Awareness, app, cameras</td><td class="num">6.0</td><td>Minus running cost (12 staff, power, repairs)</td><td class="num">−32.0</td></tr>
+      <tr><td><b>Total</b></td><td class="num"><b>89.1</b></td><td><b>Net benefit</b></td><td class="num"><b>45.5</b></td></tr>
+    </tbody>
+  </table></div>
+  <p><b>Simple payback</b> = 89.1 / 45.5 ≈ <b>2 years</b>. Most of the benefit (₹40 lakh) is the sale of recyclables, which pays the waste pickers' wages. Phasing: two routes + bins + dry-waste centre first (0–6 months), all routes + compost shed (6–18 months), then refuse mixed waste and enforce bulk generators (18–36 months).</p>
+
+</section>
+
+<section id="notes">
+  <h2><span class="tag">9</span>Assumptions &amp; notes</h2>
+  <ul>
+    <li><b>Population and households</b> are the official Ward 44 figures (Swachhtam Portal 2024), grown at 2.8 % a year to 2026.</li>
+    <li><b>Waste per person</b> 0.45 kg/day is checked against Jaipur's city average (≈1,700 t ÷ 3.9 million = 0.44). Commercial and street waste is taken as +20 %.</li>
+    <li><b>Composition</b> (50 % wet, 25 % inert) is from Prajapati et al. (2021) and the CPHEEO Manual.</li>
+    <li><b>Study area</b>: a 650 m radius around Kardhani Police Station approximates Ward 44; it is used for the street network only.</li>
+    <li><b>Route pairing</b> of odd junctions uses a greedy shortest-path method; an exact minimum-weight matching can only shorten the 12.4 km.</li>
+    <li><b>C/N mix</b> is a mass-weighted first approximation; in operation the mix is adjusted by temperature and smell.</li>
+    <li><b>Today's waste split</b> (8 % diversion) is estimated from the city's plant capacities in the NGT order of 16 July 2024.</li>
+    <li><b>Costs</b> are indicative, at 2026 prices; payback is simple payback (no discounting).</li>
+  </ul>
+  <p class="muted">Methods: Worrell &amp; Vesilind, <i>Solid Waste Engineering</i> (fleet, routing, C/N) · CPHEEO Manual 2016 · SWM Rules 2016.</p>
+</section>
+
+</main>
+</div>
+</body>
+</html>
