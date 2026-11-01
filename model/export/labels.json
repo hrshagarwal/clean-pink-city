@@ -1,0 +1,30 @@
+{
+ "classes": [
+  "battery",
+  "biological",
+  "brown-glass",
+  "cardboard",
+  "clothes",
+  "green-glass",
+  "metal",
+  "paper",
+  "plastic",
+  "shoes",
+  "trash",
+  "white-glass"
+ ],
+ "bins": {
+  "battery": "red",
+  "biological": "green",
+  "brown-glass": "blue",
+  "cardboard": "blue",
+  "clothes": "blue",
+  "green-glass": "blue",
+  "metal": "blue",
+  "paper": "blue",
+  "plastic": "blue",
+  "shoes": "blue",
+  "trash": "blue",
+  "white-glass": "blue"
+ }
+}

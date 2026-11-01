@@ -1,0 +1,11 @@
+{
+ "images_used": 10168,
+ "train": 7117,
+ "val": 1525,
+ "test": 1526,
+ "test_acc_12": 0.9404,
+ "macro_f1": 0.939,
+ "bin_acc": 0.9895,
+ "best_val_acc": 0.9561,
+ "epochs": 30
+}
