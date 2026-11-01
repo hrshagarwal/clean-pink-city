@@ -1,0 +1,16 @@
+# Model (model/Waste_Classifier_CNN.ipynb)
+torch>=2.0
+torchvision>=0.15
+numpy
+scikit-learn
+matplotlib
+onnxruntime
+# required by torch.onnx.export
+onnx
+onnxscript
+
+# Route planning (gis/gis.py)
+osmnx>=2.0
+networkx
+geopandas
+shapely

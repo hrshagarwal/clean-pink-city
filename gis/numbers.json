@@ -1,0 +1,141 @@
+{
+ "P_2024": 15675,
+ "HH_2024": 3135,
+ "P_2026": 16565.0892,
+ "HH_2026": 3313.0178399999995,
+ "res_tpd": 7.4542901399999995,
+ "nonres_tpd": 1.490858028,
+ "tot_tpd": 8.945148168,
+ "city_q_check": 0.4358974358974359,
+ "forecast": {
+  "2026": 8.945148167999998,
+  "2027": 9.317913960516163,
+  "2028": 9.706213798244379,
+  "2029": 10.110695022130335,
+  "2030": 10.532031949370564,
+  "2031": 10.970926997577514,
+  "2032": 11.428111855791364,
+  "2033": 11.904348704290646,
+  "2034": 12.400431485235329,
+  "2035": 12.917187226260653,
+  "2036": 13.45547741922828,
+  "2037": 14.016199456433329,
+  "2038": 14.600288126661603,
+  "2039": 15.208717173591095,
+  "2040": 15.842500919135855,
+  "2041": 16.50269595443845
+ },
+ "P_2041": 25066.315329511188,
+ "q_2041": 0.5486345499096094,
+ "tot_2041": 16.50269595443845,
+ "comp": {
+  "Biodegradable (food, vegetable, garden)": {
+   "frac": 0.5,
+   "tpd": 4.472574084
+  },
+  "Inert (dust, sweepings, C&D fines)": {
+   "frac": 0.25,
+   "tpd": 2.236287042
+  },
+  "Plastics": {
+   "frac": 0.09,
+   "tpd": 0.80506333512
+  },
+  "Paper & cardboard": {
+   "frac": 0.08,
+   "tpd": 0.71561185344
+  },
+  "Metals & scrap": {
+   "frac": 0.04,
+   "tpd": 0.35780592672
+  },
+  "Textile, rubber, domestic hazardous": {
+   "frac": 0.03,
+   "tpd": 0.26835444503999994
+  },
+  "Glass": {
+   "frac": 0.01,
+   "tpd": 0.08945148168
+  }
+ },
+ "wet": 4.472574084,
+ "inert": 2.236287042,
+ "dryrec": 1.96793259696,
+ "other": 0.26835444503999994,
+ "dry_hh": 2.236287042,
+ "existing_fate": {
+  "Composted": 0.2959791673235294,
+  "Recycled (formal + informal)": 0.4472574084,
+  "Inert reused": 0.0,
+  "RDF / Waste-to-energy": 3.9463888976470587,
+  "Dumped / landfilled": 2.4664930610294116,
+  "Uncollected (littered, burnt, drains)": 1.7890296336
+ },
+ "proposed_fate": {
+  "Composted": 3.5780592672,
+  "Recycled (formal + informal)": 1.3775528178719998,
+  "Inert reused": 1.3417722252,
+  "RDF / Waste-to-energy": 1.753249040928,
+  "Dumped / landfilled": 0.8945148168,
+  "Uncollected (littered, burnt, drains)": 0.0
+ },
+ "diversion_proposed": 0.704,
+ "diversion_existing": 0.08308823529411766,
+ "out_of_ward_existing": 6.7088611259999995,
+ "out_of_ward_proposed": 2.647763857728,
+ "kg_hh": 2.25,
+ "wet_hh": 1.125,
+ "dry_hh_kg": 0.5625,
+ "V_wet": 7.5,
+ "V_dry": 14.0625,
+ "S": 3613.0178399999995,
+ "shops": 300,
+ "wet_per_cust": 0.9903242734057467,
+ "dry_per_cust": 0.8665337392300283,
+ "pay_wet": 480.0,
+ "pay_dry": 234.0,
+ "cust_per_load": 270.0414183617643,
+ "b": 90.01380612058809,
+ "d": 30,
+ "c": 3.1663023803959827,
+ "X": 855.0327857643616,
+ "N": 4.225589825506072,
+ "N_prov": 6,
+ "compost_feed": 3.5780592672,
+ "A_x": 3.0,
+ "L_day": 2.3853728448,
+ "cycle": 45,
+ "L_tot": 107.341778016,
+ "row_len": 26.835444504,
+ "pad": 656.7088900800001,
+ "site": 1050.734224128,
+ "compost_out": 1.07341778016,
+ "compost_yr": 391.7974897584,
+ "leaf_ratio": 0.4,
+ "leaf_tpd": 1.43122370688,
+ "dwcc_tpd": 1.3775528178719998,
+ "dwcc_area": 287.7552817872,
+ "tkm_existing": 140.886083646,
+ "tkm_proposed": 55.603041012288,
+ "capex": {
+  "Twin-compartment e-hoppers (6 x 4.5 L)": 27.0,
+  "Household 3-bin sets (3,310 x Rs 250)": 8.282544599999998,
+  "Covered compost shed, 0.1 ha (incl. shredder, sieve)": 30.0,
+  "Dry Waste Collection Centre (baler, weighing)": 15.0,
+  "Twin litter bins, main road & markets (10 x Rs 12,000)": 1.2,
+  "Drain mesh screens (20 x Rs 8,000)": 1.6,
+  "IEC, app & AI dash-cams on hoppers": 6.0
+ },
+ "capex_tot": 89.08254459999999,
+ "benefit": {
+  "Compost sale (Rs 3,000/t)": 11.753924692752001,
+  "Market Development Assistance (Rs 1,500/t)": 5.876962346376001,
+  "Recyclables (avg Rs 8/kg)": 40.2245422818624,
+  "Avoided haul (Rs 12 per t-km)": 3.735397267356585,
+  "User charge (Rs 50/HH/month, 80 % compliance)": 15.902485631999998
+ },
+ "benefit_tot": 77.49331222034698,
+ "opex": 32.0,
+ "net": 45.49331222034698,
+ "payback": 1.9581459395290555
+}
