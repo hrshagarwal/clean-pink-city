@@ -102,3 +102,4 @@ Built as my individual part of a course project for Solid Waste Management (Civi
 - Dataset: [Garbage Classification (12 classes)](https://www.kaggle.com/datasets/mostafaabla/garbage-classification) by Mostafa Mohamed on Kaggle: 15,520 images, of which 10,168 were used here.
 - Street network and amenities: © [OpenStreetMap](https://www.openstreetmap.org/copyright) contributors.
 - Pretrained MobileNetV2 weights from torchvision.
+- "Kardhani Litter Vision" photo (`web/assets/litter-vision.jpg`): "Cow eating garbage in Jaipur" by Christian Haugen, Flickr, licensed under [CC BY 2.0](https://creativecommons.org/licenses/by/2.0/). Adapted for the demo: the detection boxes in the app are drawn over it.
