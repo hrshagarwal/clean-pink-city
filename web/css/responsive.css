@@ -1,0 +1,15 @@
+@media (max-width:1000px){
+  .hero{grid-template-columns:1fr}
+  .kpis{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .fleet{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .lv,.report,.cardzone,footer{grid-template-columns:1fr}
+}
+@media (max-width:560px){
+  .kpis,.fleet{grid-template-columns:1fr}
+  .stats{grid-template-columns:1fr 1fr}
+  .maplegend{display:none}
+  .top .hidesm{display:none}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+}

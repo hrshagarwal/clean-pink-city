@@ -1,0 +1,38 @@
+/* Layout: municipal command-centre on paper — live map hero with a HUD rail, then stacked bands
+   (impact, flow, fleet, AI vision, citizen reports, household card). Light only, by design. */
+:root{
+  color-scheme: light;
+  --paper:#f7f5f2;         /* warm off-white ground */
+  --card:#ffffff;
+  --ink:#16213b;           /* deep municipal navy */
+  --ink-2:#4b5672;
+  --muted:#8a90a3;
+  --line:#e6e2dc;
+  --pink:#d6336c;          /* Jaipur pink: the one accent */
+  --pink-soft:#fbe3ea;
+  --marigold:#f2a516;      /* hoppers */
+  --wet:#1baf7a; --dry:#2a78d6; --haz:#e34948;
+  --b0:#2a78d6; --b1:#eb6834; --b2:#1baf7a; --b3:#4a3aa7;
+  --good:#0ca30c; --warn:#fab219; --crit:#d03b3b;
+  --f-display:"Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --f-body:"Hanken Grotesk", "Segoe UI", system-ui, sans-serif;
+  --f-mono:"JetBrains Mono", ui-monospace, Consolas, monospace;
+  --f-hindi:"Tiro Devanagari Hindi", "Nirmala UI", serif;
+  --r:14px;
+  --shadow:0 1px 2px rgba(22,33,59,.06), 0 8px 24px rgba(22,33,59,.06);
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{background:var(--paper);color:var(--ink)}
+body{margin:0;font-family:var(--f-body);font-size:15px;line-height:1.55;padding-inline:clamp(16px,3vw,40px);padding-block:0 48px}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0;letter-spacing:-.01em}
+h2{font-size:clamp(24px,3.2vw,34px);font-weight:800}
+h3{font-size:18px;font-weight:700}
+p{margin:0}
+.wrap{max-width:1320px;margin-inline:auto}
+.eyebrow{font-family:var(--f-mono);font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--pink);font-weight:600}
+.muted{color:var(--muted)}
+.mono{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+.hi{font-family:var(--f-hindi);font-weight:400}
+button,select,input,textarea{font:inherit;color:inherit}
+:focus-visible{outline:2.5px solid var(--pink);outline-offset:2px;border-radius:6px}
