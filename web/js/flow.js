@@ -1,11 +1,11 @@
 /* ---------------- flow (Sankey-style) ---------------- */
 const FLOW_CATS = [
-  {k:'Composted', n:'Composted', c:'#1baf7a'},
-  {k:'Recycled (formal + informal)', n:'Recycled', c:'#2a78d6'},
-  {k:'Inert reused', n:'Inert reused (C&D, road fill)', c:'#8a90a3'},
-  {k:'RDF / Waste-to-energy', n:'RDF / Waste-to-energy', c:'#f2a516'},
-  {k:'Dumped / landfilled', n:'Dumped / landfilled', c:'#b02457'},
-  {k:'Uncollected (littered, burnt, drains)', n:'Uncollected: littered, burnt, drains', c:'#d03b3b'}
+  {k:'Composted', n:'Composted', c:'#2fa36b'},
+  {k:'Recycled (formal + informal)', n:'Recycled', c:'#2e7bd6'},
+  {k:'Inert reused', n:'Inert reused (C&D, road fill)', c:'#8e8a7e'},
+  {k:'RDF / Waste-to-energy', n:'RDF / Waste-to-energy', c:'#f4b63f'},
+  {k:'Dumped / landfilled', n:'Dumped / landfilled', c:'#a8435a'},
+  {k:'Uncollected (littered, burnt, drains)', n:'Uncollected: littered, burnt, drains', c:'#e04848'}
 ];
 const flowSvg = $('#flow'); const NS='http://www.w3.org/2000/svg';
 const TOT = NUM.tot_tpd;
@@ -22,10 +22,11 @@ const src=document.createElementNS(NS,'g'); flowSvg.append(src);
 function drawFlow(mode){
   const d = mode==='ex' ? NUM.existing_fate : NUM.proposed_fate;
   const H0=360, top=30, k=H0/TOT, gap=8;
-  src.innerHTML = `<rect x="40" y="${top}" width="16" height="${H0}" rx="4" fill="#16213b"/><text x="40" y="${top-10}" font-size="14" font-weight="800">Ward 44 · <tspan style="font-family:var(--f-display)" font-size="18">${TOT.toFixed(1)}</tspan> <tspan class="val">t/day generated</tspan></text>`;
+  src.innerHTML = `<rect x="40" y="${top}" width="16" height="${H0}" rx="4" fill="#22304a"/><text x="40" y="${top-10}" font-size="14" font-weight="800">Ward 44 · <tspan style="font-family:var(--f-display)" font-size="18">${TOT.toFixed(1)}</tspan> <tspan class="val">t/day generated</tspan></text>`;
   let ys=top, yd=top; const xd=720;
   FLOW_CATS.forEach((cat,i)=>{
     const val=d[cat.k]||0; const h=Math.max(val*k, 0.0001); const e=flowEls[i];
+    if (!(val>0)) yd+=14;  // room for the previous label's value line
     const y1=ys+h/2, y2=yd+h/2;
     const path=`M56 ${y1} C 380 ${y1}, 420 ${y2}, ${xd} ${y2}`;
     e.rib.setAttribute('d',path); e.rib.setAttribute('stroke-width',Math.max(0.5,h)); e.par.setAttribute('d',path); e.par.setAttribute('stroke-width', val>0.05?Math.min(4,h*0.4):0);
@@ -33,7 +34,7 @@ function drawFlow(mode){
     e.t.setAttribute('x',xd+22); e.t.setAttribute('y',y2+2); e.t.textContent=cat.n;
     e.v.setAttribute('x',xd+22); e.v.setAttribute('y',y2+18); e.v.textContent= val>0 ? `${val.toFixed(2)} t/day · ${(val/TOT*100).toFixed(0)} %` : 'none';
     e.t.setAttribute('opacity', val>0?1:.45); e.v.setAttribute('opacity', val>0?1:.45);
-    ys+=h; yd+=h+gap+(val>0?0:12);
+    ys+=h; yd+=h+gap;
   });
 }
 $('#fEx').onclick=()=>{ $('#fEx').setAttribute('aria-pressed','true'); $('#fPr').setAttribute('aria-pressed','false'); drawFlow('ex'); };

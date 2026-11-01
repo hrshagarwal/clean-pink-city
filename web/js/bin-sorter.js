@@ -4,7 +4,7 @@
   const NICE={battery:"Battery",biological:"Food / organic","brown-glass":"Brown glass",cardboard:"Cardboard",clothes:"Clothes","green-glass":"Green glass",metal:"Metal",paper:"Paper",plastic:"Plastic",shoes:"Shoes",trash:"Mixed trash","white-glass":"Clear glass"};
   const BIN={biological:"green",battery:"red"}; const binOf=c=>BIN[c]||"blue";
   const BINTXT={green:["Green bin","Wet waste: goes to the compost shed"],blue:["Blue bin","Dry waste: goes to the kabadi co-op"],red:["Red bin","Hazardous: keep separate for safe disposal"]};
-  const COL={green:"#1baf7a",blue:"#2a78d6",red:"#d03b3b"};
+  const COL={green:"#2fa36b",blue:"#2e7bd6",red:"#e04848"};
   const ORT=new URL("vendor/ort/", location.href).href;  // ONNX Runtime Web 1.19.2, bundled so the demo works offline
   let session=null, loading=null, stream=null;
   const q=s=>document.querySelector(s);

@@ -13,7 +13,7 @@ fleetEl.innerHTML = hoppers.map(h=>`
     <div class="row"><span>Delivered to WRC</span><b data-k="del">0.00 t</b></div>
   </article>`).join('') + `
   <article class="hop" style="opacity:.75">
-    <header><div class="badge" style="background:#8a90a3">H6</div><div><b>Standby</b><span>20 % reserve · covers breakdowns and festival peaks</span></div><span class="status st-idle">Standby</span></header>
+    <header><div class="badge" style="background:#8e8a7e">H6</div><div><b>Standby</b><span>20 % reserve · covers breakdowns and festival peaks</span></div><span class="status st-idle">Standby</span></header>
     <p style="font-size:13px;color:var(--ink-2)">Parked and charged at the Ward Resource Centre. It is dispatched when a hopper reports a fault or a beat runs more than 30 minutes late.</p>
   </article>`;
 const cardRefs = hoppers.map(h=>{ const el=$('#card-'+h.id); const m={}; el.querySelectorAll('[data-k]').forEach(n=>m[n.dataset.k]=n); return m; });
