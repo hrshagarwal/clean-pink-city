@@ -2,7 +2,7 @@
 
 AI waste sorting and GIS route planning for a ward in Jaipur, the Pink City.
 
-**Live demo:** <LINK> · **Demo video:** <LINK>
+**Live demo:** <LINK> · **Demo video:** [YouTube](https://youtu.be/MUE6mEVxti8)
 
 ![CleanPinkCity web app](docs/demo.png)
 
