@@ -13,7 +13,7 @@
 .verdict small{font-family:var(--f-mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;opacity:.9}
 .verdict b{font-family:var(--f-display);font-size:clamp(26px,3.4vw,36px);line-height:1.05}
 .verdict span{font-size:14px;opacity:.95}
-.v-idle{background:#8a90a3}.v-green{background:#1baf7a}.v-blue{background:#2a78d6}.v-red{background:#d03b3b}
+.v-idle{background:#8e8a7e}.v-green{background:#2fa36b}.v-blue{background:#2e7bd6}.v-red{background:#e04848}
 .probs{list-style:none;margin:0;padding:0;display:grid;gap:8px}
 .probs li{display:grid;grid-template-columns:120px 1fr 48px;gap:10px;align-items:center;font-size:13.5px}
 .probs .pb{height:10px;border-radius:5px;background:#efedea;overflow:hidden}

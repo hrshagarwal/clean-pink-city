@@ -33,7 +33,7 @@ section.band{margin-top:64px}
 .st-collect{background:#e3f6ee;color:#0d7a52}.st-travel{background:#e7f0fb;color:#1c5cab}.st-unload{background:#fdf0d6;color:#8a5b00}.st-idle{background:#efedea;color:var(--ink-2)}.st-done{background:#efedea;color:var(--ink-2)}
 .gauges{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .gauge{font-size:12px;color:var(--ink-2)}
-.gauge .bar{height:10px;border-radius:5px;background:#f0eeea;overflow:hidden;margin-top:4px}
+.gauge .bar{height:10px;border-radius:5px;background:#f3eee2;overflow:hidden;margin-top:4px}
 .gauge .bar i{display:block;height:100%;width:0;border-radius:5px;transition:width .3s linear}
 .hop .row{display:flex;justify-content:space-between;font-size:12.5px;color:var(--ink-2)}
 .hop .row b{color:var(--ink);font-family:var(--f-mono);font-weight:600}
@@ -42,12 +42,12 @@ section.band{margin-top:64px}
 .lvimg{position:relative;border-radius:var(--r);overflow:hidden;box-shadow:var(--shadow);background:#ddd}
 .lvimg img{display:block;width:100%;height:auto}
 .lvimg svg{position:absolute;inset:0;width:100%;height:100%}
-.scan{position:absolute;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--pink),transparent);box-shadow:0 0 18px 4px rgba(214,51,108,.45);top:0;animation:scan 3.6s ease-in-out infinite}
+.scan{position:absolute;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--pink),transparent);box-shadow:0 0 18px 4px rgba(224,96,126,.45);top:0;animation:scan 3.6s ease-in-out infinite}
 @keyframes scan{0%{top:2%}50%{top:96%}100%{top:2%}}
 .box rect{fill:none;stroke-width:3;animation:boxin 4.8s ease-in-out infinite}
 .box text{font-family:var(--f-mono);font-size:15px;font-weight:600;fill:#fff}
 @keyframes boxin{0%,8%{stroke-dasharray:0 2000}25%,100%{stroke-dasharray:2000 0}}
-.hud{position:absolute;left:10px;top:10px;font-family:var(--f-mono);font-size:11.5px;background:rgba(22,33,59,.78);color:#fff;border-radius:8px;padding:6px 9px;line-height:1.45}
+.hud{position:absolute;left:10px;top:10px;font-family:var(--f-mono);font-size:11.5px;background:rgba(34,48,74,.78);color:#fff;border-radius:8px;padding:6px 9px;line-height:1.45}
 .det{list-style:none;padding:0;margin:0;display:grid;gap:8px}
 .det li{display:grid;grid-template-columns:12px 1fr auto;gap:10px;align-items:center;background:var(--card);border-radius:10px;padding:10px 12px;box-shadow:var(--shadow);font-size:14px}
 .det li i{width:12px;height:12px;border-radius:3px}
@@ -72,8 +72,8 @@ textarea{min-height:70px;resize:vertical}
 .flip{perspective:1200px;width:100%;max-width:420px;aspect-ratio:1.586/1;cursor:pointer}
 .flip-in{position:relative;width:100%;height:100%;transition:transform .9s cubic-bezier(.4,.2,.2,1);transform-style:preserve-3d}
 .flip:hover .flip-in,.flip.on .flip-in{transform:rotateY(180deg)}
-.face{position:absolute;inset:0;border-radius:18px;padding:18px;backface-visibility:hidden;box-shadow:0 14px 40px rgba(22,33,59,.18);overflow:hidden;color:#fff;display:grid}
-.front{background:linear-gradient(135deg,#d6336c 0%,#b02457 55%,#7d1b46 100%);grid-template-rows:auto 1fr auto}
+.face{position:absolute;inset:0;border-radius:18px;padding:18px;backface-visibility:hidden;box-shadow:0 14px 40px rgba(34,48,74,.18);overflow:hidden;color:#fff;display:grid}
+.front{background:linear-gradient(135deg,#e0607e 0%,#a8435a 55%,#7d1b46 100%);grid-template-rows:auto 1fr auto}
 .front::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 85% 15%,rgba(255,255,255,.22),transparent 40%),repeating-linear-gradient(45deg,rgba(255,255,255,.05) 0 2px,transparent 2px 12px)}
 .back{background:#fff;color:var(--ink);transform:rotateY(180deg);grid-template-columns:auto 1fr;gap:16px;align-items:center;border:1px solid var(--line)}
 .face>*{position:relative}
@@ -98,7 +98,7 @@ textarea{min-height:70px;resize:vertical}
 .score th{font-size:11.5px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);text-align:left;font-weight:600;padding:8px 10px;border-bottom:1px solid var(--line)}
 .score td{padding:10px;border-bottom:1px solid var(--line);font-variant-numeric:tabular-nums}
 .score .barcell{width:40%}
-.score .barcell div{height:8px;border-radius:4px;background:#f0eeea;overflow:hidden}
+.score .barcell div{height:8px;border-radius:4px;background:#f3eee2;overflow:hidden}
 .score .barcell i{display:block;height:100%;border-radius:4px}
 .tablewrap{overflow-x:auto;background:var(--card);border-radius:var(--r);box-shadow:var(--shadow);padding:6px 8px}
 

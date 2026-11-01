@@ -1,0 +1,117 @@
+/* ---------- doodle notebook theme ----------
+   Hand-drawn look shared with the project deck: grid paper, pen-ink outlines with a slight
+   wobble (SVG filter #rough in index.html), scribbled underlines, sticky notes and hatched bars. */
+
+/* paper: grid lines + soft watercolour corners */
+html{background-color:var(--paper);background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:28px 28px}
+body{background:transparent}
+body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background:radial-gradient(42vw 32vw at 0 0,rgba(247,198,208,.6),transparent 70%),
+             radial-gradient(34vw 28vw at 100% 100%,rgba(244,182,63,.22),transparent 70%),
+             radial-gradient(30vw 24vw at 100% 0,rgba(58,166,160,.1),transparent 70%)}
+
+/* scribbled underlines (blue under section titles, pink under key numbers) */
+h2{display:inline-block;padding-bottom:12px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 14' preserveAspectRatio='none'%3E%3Cpath d='M3 6 C 50 2, 90 10, 150 5 S 240 3, 297 6' fill='none' stroke='%232e7bd6' stroke-width='3.2' stroke-linecap='round' vector-effect='non-scaling-stroke'/%3E%3Cpath d='M40 11 C 100 8, 170 12, 262 9' fill='none' stroke='%232e7bd6' stroke-width='2.2' stroke-linecap='round' opacity='.75' vector-effect='non-scaling-stroke'/%3E%3C/svg%3E") left bottom/100% 14px no-repeat}
+.hero-head h1{font-weight:700;line-height:1.08}
+.hero-head h1 em{padding-bottom:.06em;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 12' preserveAspectRatio='none'%3E%3Cpath d='M3 7 C 40 3, 90 11, 130 6 S 180 4, 197 7' fill='none' stroke='%23e0607e' stroke-width='3.5' stroke-linecap='round' vector-effect='non-scaling-stroke'/%3E%3C/svg%3E") left bottom/100% .22em no-repeat}
+.kpi b{padding-bottom:10px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 10' preserveAspectRatio='none'%3E%3Cpath d='M3 6 C 30 2, 60 9, 117 4' fill='none' stroke='%23e0607e' stroke-width='3' stroke-linecap='round' vector-effect='non-scaling-stroke'/%3E%3C/svg%3E") left bottom/2.6em 10px no-repeat}
+
+/* pen-ink cards */
+.panel,.mapcard,.kpi,.flowcard,.hop,.lvimg,.det li,.reports li,.bin,.mstats div,.nnwrap,.tablewrap,.verdict,.empty{
+  position:relative;border:0;border-radius:var(--r);background-color:var(--card);box-shadow:var(--shadow)}
+.panel::before,.mapcard::before,.kpi::before,.flowcard::before,.hop::before,.lvimg::before,.det li::before,.reports li::before,
+.bin::before,.mstats div::before,.nnwrap::before,.tablewrap::before,.verdict::before,.empty::before{
+  content:"";position:absolute;inset:0;z-index:3;border:var(--pen) solid var(--ink);border-radius:inherit;filter:url(#rough);pointer-events:none}
+.empty::before{border-style:dashed}
+.kpi::after{display:none}
+.kpi:nth-child(4n+1){transform:rotate(-.7deg)} .kpi:nth-child(4n+2){transform:rotate(.5deg)}
+.kpi:nth-child(4n+3){transform:rotate(-.3deg)} .kpi:nth-child(4n){transform:rotate(.8deg)}
+.hop:nth-child(odd){transform:rotate(-.35deg)} .hop:nth-child(even){transform:rotate(.35deg)}
+
+/* sticky notes with tape: the AI verdict, "what happens next", toasts */
+.verdict,.lv .panel,.toast{background-color:#fff3c4;color:var(--ink);transform:rotate(-1deg)}
+.lv .panel{transform:rotate(.8deg)}
+.verdict::after,.lv .panel::after{content:"";position:absolute;top:-11px;left:50%;width:86px;height:22px;z-index:4;
+  transform:translateX(-50%) rotate(-3deg);background:rgba(247,198,208,.75);box-shadow:0 1px 0 rgba(34,48,74,.08)}
+.v-idle{background-color:#fff3c4}.v-green{background-color:#d6f0e1}.v-blue{background-color:#d8e7fb}.v-red{background-color:#fbd8d8}
+.verdict small{font-family:var(--f-hand);font-size:16px;letter-spacing:0;text-transform:none;opacity:1;color:var(--ink-2)}
+.verdict b{font-family:var(--f-display);font-weight:700}
+.v-green b{color:var(--wet)}.v-blue b{color:var(--dry)}.v-red b{color:var(--haz)}
+.verdict span{opacity:1}
+.verdict .spinner{border-color:rgba(34,48,74,.25);border-top-color:var(--ink)}
+.toast{font-family:var(--f-hand);font-size:18px;font-weight:400;border:var(--pen) solid var(--ink);border-radius:var(--r);transform:translateX(-50%) rotate(-1deg)}
+
+/* hand-drawn buttons, chips and choices */
+.btn,.chip,.samples button,.types label,.pill{font-family:var(--f-hand);font-weight:400;border:var(--pen) solid var(--ink);border-radius:var(--r);background-color:var(--card);color:var(--ink)}
+.btn,.chip,.samples button,.types label{box-shadow:2px 2px 0 var(--ink);transition:transform .12s,box-shadow .12s}
+.btn{font-size:17px;padding:5px 13px}
+.chip{font-size:15px;padding:2px 11px}
+.samples button{font-size:15.5px}
+.types label{font-size:17px}
+.pill{font-size:15px;padding:2px 10px}
+.btn:hover,.chip:hover,.samples button:hover,.types label:hover{transform:translate(-1px,-1px);box-shadow:3px 3px 0 var(--ink)}
+.btn:active,.chip:active,.samples button:active{transform:translate(1px,1px);box-shadow:0 0 0 var(--ink)}
+.btn.primary,.chip[aria-pressed="true"]{background-color:var(--ink);color:var(--paper);border-color:var(--ink)}
+.btn.pink{background-color:var(--pink);color:#fff;border-color:var(--ink)}
+.btn[aria-pressed="true"]{background-color:var(--pink-soft);border-color:var(--ink);color:var(--ink)}
+.types label:has(input:checked){background-color:var(--pink-soft);border-color:var(--ink);color:var(--ink)}
+.seg{border:var(--pen) solid var(--ink);border-radius:var(--r);background-color:var(--paper)}
+.seg button{font-family:var(--f-hand);font-size:17px;font-weight:400}
+.seg button[aria-pressed="true"]{background-color:var(--pink-soft);box-shadow:none;color:var(--ink)}
+label{font-family:var(--f-hand);font-size:17px;font-weight:400}
+legend{font-family:var(--f-hand);font-size:17px!important;font-weight:400!important}
+select,input,textarea{font-family:var(--f-body);font-size:15px;border:1.5px solid var(--ink);border-radius:10px 4px 9px 5px / 4px 9px 5px 10px;background-color:var(--card)}
+
+/* hatched marker fills inside pen-outlined bars */
+.shiftbar,.gauge .bar,.probs .pb,.score .barcell div{height:12px;border:1.5px solid var(--ink);border-radius:8px 3px 7px 4px;background-color:var(--paper)}
+.shiftbar>i,.gauge .bar i,.probs .pb i,.score .barcell i{border-radius:0;background-image:repeating-linear-gradient(-45deg,rgba(255,255,255,.45) 0 3px,transparent 3px 7px)!important}
+.shiftbar>i{background-color:var(--marigold)}
+
+/* header, map overlays, small print */
+.top{background:rgba(251,247,238,.9);border-bottom:2px dashed #d8cfb8}
+.brand b{font-size:23px;font-weight:700}
+.brand span{font-family:var(--f-hand);font-size:15px}
+.clock{font-family:var(--f-display);font-size:26px;font-weight:700;min-width:3.2em}
+.maplegend,.credit{font-family:var(--f-hand);border:1.5px solid var(--ink);border-radius:10px 4px 9px 5px}
+.maplegend{font-size:14.5px}.credit{font-size:13px}
+.armhint{font-family:var(--f-hand);font-size:17px;font-weight:400;border:var(--pen) solid var(--ink);border-radius:var(--r);box-shadow:2px 2px 0 var(--ink)}
+.feed time{font-size:15px}
+.tag{font-size:13.5px;font-weight:400;border-radius:6px 2px 5px 3px}
+.status{font-family:var(--f-hand);font-size:15px;font-weight:400;border:1.5px solid currentColor}
+.hop .badge{font-family:var(--f-display);font-size:18px;font-weight:700;border:var(--pen) solid var(--ink);border-radius:var(--r)}
+.hop .row b{font-size:16px;font-weight:400}
+.gauge{font-family:var(--f-hand);font-size:15px}
+.kpi .u{font-family:var(--f-hand);font-weight:400}
+.kpi small{font-size:14px}
+.stat span,.mstats span{font-family:var(--f-hand);font-size:15px}
+.stat b,.mstats b{font-weight:700}
+.probs li{font-family:var(--f-hand);font-size:16px}
+.probs .mono{font-size:16px}
+.hud{font-family:ui-monospace,Consolas,monospace}
+.box text{font-size:19px;font-weight:400}
+.det li{font-family:var(--f-hand);font-size:17px}
+.det li b{font-size:16px;font-weight:400}
+.det li i{border:1.5px solid var(--ink);border-radius:3px 1px 3px 2px}
+.drop{border:2.5px dashed var(--ink);border-radius:var(--r);background-color:var(--card)}
+.drop .hint b{font-weight:700;font-size:24px}
+.nnwrap .nnhead b{font-size:18px;font-weight:700}
+.nnwrap .nnhead{font-family:var(--f-hand);font-size:15px}
+.score th{font-family:var(--f-hand);font-size:16px;font-weight:400;letter-spacing:0;text-transform:none;color:var(--ink-2);border-bottom:2px solid var(--ink)}
+.score td{border-bottom:1.5px dashed var(--line)}
+footer{border-top:2px dashed #d8cfb8}
+footer h3{font-size:20px}
+
+/* household card: pen outline, flat pink with a light grid instead of a glossy gradient */
+.face{border:2px solid var(--ink);box-shadow:4px 5px 0 rgba(34,48,74,.18)}
+.front{background:var(--pink);background-image:linear-gradient(rgba(255,255,255,.13) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.13) 1px,transparent 1px);background-size:20px 20px}
+.front::before{display:none}
+.back{background:var(--card)}
+.fmid .id{font-size:clamp(20px,2.8vw,26px);letter-spacing:.04em}
+.chipgold{background:var(--marigold);border:1.5px solid var(--ink);box-shadow:none}
+.ring{border:var(--pen) solid var(--ink)}
+.ring b{border:1.5px solid var(--ink)}
+.bin i{border:1.5px solid var(--ink)}
+
+/* flow diagram labels */
+#flow text{font-family:var(--f-hand);font-size:16px;font-weight:400}
+#flow .val{font-family:var(--f-hand);font-size:13.5px}

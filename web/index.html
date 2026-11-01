@@ -8,12 +8,13 @@
 <title>CleanPinkCity</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Tiro+Devanagari+Hindi&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Kalam:wght@400;700&family=Patrick+Hand&display=swap">
 <script src="vendor/qrcode.min.js"></script>
 <link rel="stylesheet" href="css/base.css">
 <link rel="stylesheet" href="css/hero.css">
 <link rel="stylesheet" href="css/sections.css">
 <link rel="stylesheet" href="css/bin-sorter.css">
+<link rel="stylesheet" href="css/doodle.css">
 <link rel="stylesheet" href="css/responsive.css">
 <script defer src="js/data.js"></script>
 <script defer src="js/core.js"></script>
@@ -28,6 +29,13 @@
 <script defer src="js/main.js"></script>
 </head>
 <body>
+<!-- pen wobble for card outlines (used by css/doodle.css) -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <filter id="rough" x="-2%" y="-2%" width="104%" height="104%">
+    <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="7"/>
+    <feDisplacementMap in="SourceGraphic" scale="3.2" xChannelSelector="R" yChannelSelector="G"/>
+  </filter>
+</svg>
 
 <header class="top">
   <div class="wrap">
@@ -61,7 +69,7 @@
       <div class="credit">Map data © OpenStreetMap contributors</div>
       <div class="maplegend" aria-hidden="true">
         <span><i style="background:var(--marigold)"></i>E-hopper (live)</span><span><i style="background:var(--pink)"></i>Ward Resource Centre</span>
-        <span><i style="background:#16213b;height:6px"></i>Kalwar Road</span><span><i style="background:#d03b3b"></i>Hospital (CBWTF)</span>
+        <span><i style="background:#22304a;height:6px"></i>Kalwar Road</span><span><i style="background:#e04848"></i>Hospital (CBWTF)</span>
       </div>
       <div class="armhint" id="armhint" hidden>Tap the map to drop your report pin</div>
     </div>
@@ -162,22 +170,22 @@
       <div class="lvimg">
         <img src="assets/litter-vision.jpg" alt="A Jaipur street with an overflowing yellow municipal container and a cow eating scattered garbage" width="900" height="675">
         <svg viewBox="0 0 900 675" aria-hidden="true">
-          <g class="box"><rect x="22" y="182" width="490" height="372" rx="6" stroke="#f2a516"/><rect x="22" y="152" width="300" height="28" rx="4" fill="#f2a516" stroke="none" style="animation:none"/><text x="30" y="172">overflowing D.P. container 0.96</text></g>
-          <g class="box"><rect x="588" y="222" width="214" height="176" rx="6" stroke="#d6336c" style="animation-delay:.5s"/><rect x="588" y="194" width="196" height="26" rx="4" fill="#d6336c" stroke="none" style="animation:none"/><text x="595" y="213">stray cattle 0.94</text></g>
-          <g class="box"><rect x="458" y="348" width="246" height="150" rx="6" stroke="#1baf7a" style="animation-delay:1s"/><rect x="458" y="500" width="230" height="26" rx="4" fill="#1baf7a" stroke="none" style="animation:none"/><text x="465" y="519">mixed waste pile 0.91</text></g>
-          <g class="box"><rect x="78" y="534" width="58" height="46" rx="5" stroke="#2a78d6" style="animation-delay:1.5s"/><rect x="78" y="584" width="150" height="24" rx="4" fill="#2a78d6" stroke="none" style="animation:none"/><text x="84" y="602">plastic bag 0.87</text></g>
-          <g class="box"><rect x="302" y="562" width="72" height="38" rx="5" stroke="#4a3aa7" style="animation-delay:2s"/><rect x="302" y="604" width="168" height="24" rx="4" fill="#4a3aa7" stroke="none" style="animation:none"/><text x="308" y="622">snack packet 0.82</text></g>
+          <g class="box"><rect x="22" y="182" width="490" height="372" rx="6" stroke="#f4b63f"/><rect x="22" y="152" width="300" height="28" rx="4" fill="#f4b63f" stroke="none" style="animation:none"/><text x="30" y="172">overflowing D.P. container 0.96</text></g>
+          <g class="box"><rect x="588" y="222" width="214" height="176" rx="6" stroke="#e0607e" style="animation-delay:.5s"/><rect x="588" y="194" width="196" height="26" rx="4" fill="#e0607e" stroke="none" style="animation:none"/><text x="595" y="213">stray cattle 0.94</text></g>
+          <g class="box"><rect x="458" y="348" width="246" height="150" rx="6" stroke="#2fa36b" style="animation-delay:1s"/><rect x="458" y="500" width="230" height="26" rx="4" fill="#2fa36b" stroke="none" style="animation:none"/><text x="465" y="519">mixed waste pile 0.91</text></g>
+          <g class="box"><rect x="78" y="534" width="58" height="46" rx="5" stroke="#2e7bd6" style="animation-delay:1.5s"/><rect x="78" y="584" width="150" height="24" rx="4" fill="#2e7bd6" stroke="none" style="animation:none"/><text x="84" y="602">plastic bag 0.87</text></g>
+          <g class="box"><rect x="302" y="562" width="72" height="38" rx="5" stroke="#8c7ae6" style="animation-delay:2s"/><rect x="302" y="604" width="168" height="24" rx="4" fill="#8c7ae6" stroke="none" style="animation:none"/><text x="308" y="622">snack packet 0.82</text></g>
         </svg>
         <div class="scan" aria-hidden="true"></div>
         <div class="hud">CAM-H3 · Beat B3 · 07:42:18<br>26.9531 N, 75.7066 E · 4 detections</div>
       </div>
       <div style="display:grid;gap:12px">
         <ul class="det">
-          <li><i style="background:#f2a516"></i><span>Overflowing secondary container</span><b>0.96</b></li>
-          <li><i style="background:#d6336c"></i><span>Stray cattle at waste</span><b>0.94</b></li>
-          <li><i style="background:#1baf7a"></i><span>Mixed waste pile (GVP)</span><b>0.91</b></li>
-          <li><i style="background:#2a78d6"></i><span>Plastic carry bag</span><b>0.87</b></li>
-          <li><i style="background:#4a3aa7"></i><span>Multilayer snack packet</span><b>0.82</b></li>
+          <li><i style="background:#f4b63f"></i><span>Overflowing secondary container</span><b>0.96</b></li>
+          <li><i style="background:#e0607e"></i><span>Stray cattle at waste</span><b>0.94</b></li>
+          <li><i style="background:#2fa36b"></i><span>Mixed waste pile (GVP)</span><b>0.91</b></li>
+          <li><i style="background:#2e7bd6"></i><span>Plastic carry bag</span><b>0.87</b></li>
+          <li><i style="background:#8c7ae6"></i><span>Multilayer snack packet</span><b>0.82</b></li>
         </ul>
         <div class="panel" style="font-size:13.5px"><b>What happens next.</b> The flags are clustered by location. A spot flagged on three or more days becomes a garbage vulnerable point on the ward scorecard, and the sanitary inspector is sent the photo, the GPS fix and the beat number.</div>
         <p class="muted" style="font-size:12px">Illustrative demo: the boxes are hand-annotated on a real Jaipur photograph ("Cow eating garbage in Jaipur", Christian Haugen, CC BY 2.0), not live model output.</p>
