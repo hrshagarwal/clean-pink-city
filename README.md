@@ -12,7 +12,7 @@ A smart solid-waste-management system designed for Kardhani (Ward 44, Jaipur): a
 
 - **"Kaunsa Dabba?" AI bin sorter.** Snap or upload a photo of a waste item and get the right bin: green (wet), blue (dry) or red (hazardous). The model runs entirely in the browser, so photos never leave the device.
 - **GIS route planning.** Plans door-to-door collection on the ward's OpenStreetMap street network and splits it into 5 balanced beats for the collection vehicles.
-- **Web app.** A single `index.html` that combines the bin sorter (live camera or upload), the route maps and a citizen complaint map.
+- **Web app.** A static site that combines the bin sorter (live camera or upload), the route maps and a citizen complaint map, drawn in the same hand-drawn notebook style as the project presentation.
 
 ## How the model works
 
@@ -50,7 +50,7 @@ The study area is a 650 m radius around Kardhani, approximating Ward 44. Its Ope
 - **Model:** PyTorch, torchvision (MobileNetV2), scikit-learn, ONNX
 - **In-browser inference:** ONNX Runtime Web (WebAssembly, bundled in `web/vendor/` so the demo works offline)
 - **GIS:** OSMnx, NetworkX, GeoPandas, Shapely, Matplotlib
-- **Web app:** plain HTML, CSS and JavaScript in a single file, no build step; complaint reports are kept in the browser's localStorage
+- **Web app:** plain HTML, CSS and JavaScript split into small files (`web/css/`, `web/js/`), no framework or build step; complaint reports are kept in the browser's localStorage
 
 ## Repository layout
 
@@ -58,6 +58,7 @@ The study area is a 650 m radius around Kardhani, approximating Ward 44. Its Ope
 model/   training notebook, notebook build script, plots, metrics, trained head, ONNX export + labels
 gis/     street-network routing analysis and ward design calculations, with their outputs
 web/     the web app, deployable as a static site (index.html at its root)
+           css/ styles (doodle.css holds the hand-drawn theme), js/ one file per feature, assets/ images
 docs/    images used in this README
 ```
 
