@@ -13,6 +13,7 @@ A smart solid-waste-management system designed for Kardhani (Ward 44, Jaipur): a
 - **"Kaunsa Dabba?" AI bin sorter.** Snap or upload a photo of a waste item and get the right bin: green (wet), blue (dry) or red (hazardous). The model runs entirely in the browser, so photos never leave the device.
 - **GIS route planning.** Plans door-to-door collection on the ward's OpenStreetMap street network and splits it into 5 balanced beats for the collection vehicles.
 - **Web app.** A static site that combines the bin sorter (live camera or upload), the route maps and a citizen complaint map, drawn in the same hand-drawn notebook style as the project presentation.
+- **Design calculations.** Every number in the proposed system worked out step by step: waste generation, bin sizes, fleet size, routes, compost shed, transport, diversion and payback ([view online](https://clean-pink-city-web.vercel.app/calculations.html), source in `web/calculations.html`).
 
 ## How the model works
 
@@ -56,7 +57,7 @@ The study area is a 650 m radius around Kardhani, approximating Ward 44. Its Ope
 
 ```
 model/   training notebook, notebook build script, plots, metrics, trained head, ONNX export + labels
-gis/     street-network routing analysis and ward design calculations, with their outputs
+gis/     street-network routing analysis, ward design calculations and report chart scripts, with their outputs
 web/     the web app, deployable as a static site (index.html at its root)
            css/ styles (doodle.css holds the hand-drawn theme), js/ one file per feature, assets/ images
 docs/    images used in this README
@@ -84,7 +85,7 @@ pip install -r requirements.txt jupyter
 2. Unzip it so the 12 class folders sit in `model/data/garbage_classification/` (for example `model/data/garbage_classification/battery/`).
 3. Open `model/Waste_Classifier_CNN.ipynb` from inside `model/` and run all cells. It writes plots and metrics to `model/outputs/` and the ONNX model and labels to `model/export/`. To update the web app, copy `model/export/waste_mobilenetv2.onnx` into `web/`.
 
-**Route planning.** Run `python gis.py` from inside `gis/`. It needs two OpenStreetMap files that are not included in the repo: `kardhani.graphml` (the street network) and `amen.gpkg` (amenities with `name` and `amenity` tags, used to place facilities on the maps). Re-download them with OSMnx around the centre point `26.9525358, 75.7104088`: get the street network with `ox.graph_from_point` and save it with `ox.save_graphml`, then get the amenities with `ox.features_from_point` and save them with `GeoDataFrame.to_file`. Use a download radius larger than the 650 m study area. OSM data changes over time, so a fresh download can give numbers slightly different from `gis/gis_stats.json`. `design_calc.py` needs no input files and writes `numbers.json`.
+**Route planning.** Run `python gis.py` from inside `gis/`. It needs two OpenStreetMap files that are not included in the repo: `kardhani.graphml` (the street network) and `amen.gpkg` (amenities with `name` and `amenity` tags, used to place facilities on the maps). Re-download them with OSMnx around the centre point `26.9525358, 75.7104088`: get the street network with `ox.graph_from_point` and save it with `ox.save_graphml`, then get the amenities with `ox.features_from_point` and save them with `GeoDataFrame.to_file`. Use a download radius larger than the 650 m study area. OSM data changes over time, so a fresh download can give numbers slightly different from `gis/gis_stats.json`. `design_calc.py` needs no input files and writes `numbers.json`; `charts.py` and `pie_charts.py` read `numbers.json` and draw the report charts as PNGs.
 
 ## Limitations and next steps
 
